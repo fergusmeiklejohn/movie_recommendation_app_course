@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_recommendation_app_course/features/movie_flow/genre/genre.dart';
 import 'package:movie_recommendation_app_course/features/movie_flow/result/movie.dart';
 
@@ -28,13 +29,13 @@ class MovieFlowState {
   final PageController pageController;
   final int rating;
   final int yearsBack;
-  final List<Genre> genres;
-  final Movie movie;
+  final AsyncValue<List<Genre>> genres;
+  final AsyncValue<Movie> movie;
 
   const MovieFlowState({
     required this.pageController,
-    this.movie = movieMock,
-    this.genres = genresMock,
+    required this.movie,
+    required this.genres,
     this.rating = 5,
     this.yearsBack = 10,
   });
@@ -43,8 +44,8 @@ class MovieFlowState {
     PageController? pageController,
     int? rating,
     int? yearsBack,
-    List<Genre>? genres,
-    Movie? movie,
+    AsyncValue<List<Genre>>? genres,
+    AsyncValue<Movie>? movie,
   }) {
     return MovieFlowState(
       pageController: pageController ?? this.pageController,
